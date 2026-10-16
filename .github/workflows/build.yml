@@ -1,0 +1,29 @@
+name: Build C++ Konversi Nilai
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+
+    - name: Setup MinGW GCC
+      uses: egor-tensin/setup-mingw@v2
+      with:
+        version: 12.2.0
+
+    - name: Compile Program (EXE Windows)
+      run: g++ -o program_nilai.exe main.cpp
+
+    - name: Upload Executable Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: program-nilai-exe
+        path: program_nilai.exe
